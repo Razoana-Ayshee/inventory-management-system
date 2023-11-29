@@ -9,29 +9,36 @@ Welcome to the Inventory Management System with a focus on the Products feature,
 1. [Features](#features)
 2. [Installation](#installation)
 3. [Usage](#usage)
-4. [Screenshots](#screenshots)
-5. [Contributing](#contributing)
-6. [License](#license)
+6. [Contributing](#contributing)
+7. [License](#license)
 
 ## Features
 
-### 1. Add Product
+### 1. Login
+
+Securely authenticate users with a login system. Users can access their accounts and perform actions based on their roles and permissions.
+
+### 2. Register
+
+Allow new users to register securely. Registration includes account creation with necessary information and password protection.
+
+### 3. Add Product
 
 Easily add new products to your inventory by providing details such as product name, description, price, and quantity.
 
-### 2. View Product List
+### 4. View Product List
 
 Access a comprehensive list of all products in your inventory. This includes important details like product name, description, price, and available quantity.
 
-### 3. Update Product Information
+### 5. Update Product Information
 
 Keep your product information up-to-date by editing existing product details. This includes modifying product names, descriptions, prices, and quantities.
 
-### 4. Search and Filter
+### 6. Search and Filter
 
 Efficiently search for specific products using keywords or filter products based on criteria such as price range or quantity available.
 
-### 5. Delete Product
+### 7. Delete Product
 
 Remove products from your inventory when they are no longer available or relevant.
 
