@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
 use App\Models\Product;
-use Illuminate\Contracts\View\Factory;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -18,18 +16,15 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index():View
+    public function index(): View|RedirectResponse
     {
-        try{
-
-            $products=Product::select(['*'])->get();
-            return view('products.index',compact('products'));
-        }
-        catch (throwable $exception) {
+        try {
+            $products = Product::select(['*'])->get();
+            return view('products.index', compact('products'));
+        } catch (throwable $exception) {
             Log::debug($exception->getMessage());
             return back()->with([
                 'status' => 'error',
-
                 'message' => $exception->getMessage(),
             ]);
         }
@@ -47,30 +42,33 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
+        /** @var User $authUser */
+        $authUser = auth()->user();
 
         try {
             $rules = [
                 'name' => ['required', 'string', 'max:10'],
                 'quantity' => ['required', 'integer'],
                 'price' => ['required', 'integer'],
-
             ];
-            $validateData=Validator::make($request->all(),$rules)->validate();
-            $product=new Product();
-            $product->fill( $validateData);
+
+            $validateData = Validator::make($request->all(), $rules)->validate();
+            $validateData['user_id'] = $authUser->id;
+
+            $product = new Product();
+            $product->fill($validateData);
             $product->save();
-            return redirect()->route('products.list')->with(['status'=>'success','message'=>'product added successfully']);
+
+            return redirect()->route('products.list')->with(['status' => 'success', 'message' => 'product added successfully']);
         } catch (throwable $exception) {
             Log::debug($exception->getMessage());
             return back()->with([
                 'status' => 'error',
-
                 'message' => $exception->getMessage(),
             ]);
         }
-
     }
 
     /**
@@ -86,12 +84,10 @@ class ProductController extends Controller
      */
     public function edit(int $id): View|RedirectResponse
     {
-        try{
-
-            $productEdit=Product::find($id);
-            return view('products.add-edit',compact('productEdit'));
-        }
-        catch (throwable $exception) {
+        try {
+            $productEdit = Product::find($id);
+            return view('products.add-edit', compact('productEdit'));
+        } catch (throwable $exception) {
             Log::debug($exception->getMessage());
             return back()->with([
                 'status' => 'error',
@@ -104,26 +100,25 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, int $id): RedirectResponse
     {
         try {
-            $product=Product::find($id);
+            $product = Product::find($id);
             $rules = [
                 'name' => ['required', 'string', 'max:10'],
                 'quantity' => ['required', 'integer'],
                 'price' => ['required', 'integer'],
-
             ];
-            $validateData=Validator::make($request->all(),$rules)->validate();
+            $validateData = Validator::make($request->all(), $rules)->validate();
 
-            $product->fill( $validateData);
+            $product->fill($validateData);
             $product->save();
-            return redirect()->route('products.list')->with(['status'=>'success','message'=>'product updated successfully']);
+
+            return redirect()->route('products.list')->with(['status' => 'success', 'message' => 'product updated successfully']);
         } catch (throwable $exception) {
             Log::debug($exception->getMessage());
             return back()->with([
                 'status' => 'error',
-
                 'message' => $exception->getMessage(),
             ]);
         }
@@ -136,12 +131,11 @@ class ProductController extends Controller
     {
         try {
             $product = Product::select(['*'])->find($id);
+            if (!$product) return back()->with(['status' => 'error', 'message' => "not found"]);
+            $product->delete();
 
-            if(!$product ) return back()->with(['status' => 'error', 'message' => "not found"]);
-
-            $product ->delete();
-            return redirect()->route('products.list')->with(['status'=>'success','message'=>'product deleted successfully']);
-        } catch (Throwable $exception){
+            return redirect()->route('products.list')->with(['status' => 'success', 'message' => 'product deleted successfully']);
+        } catch (Throwable $exception) {
             Log::debug($exception->getMessage());
             return back()->with(['status' => 'error', 'message' => $exception->getMessage()]);
         }

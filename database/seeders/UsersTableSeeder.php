@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder
 {
@@ -15,20 +16,23 @@ class UsersTableSeeder extends Seeder
     public function run(): void
     {
         DB::table('users')->delete();
+
         DB::table('users')->insert([
             [
+                'id' => 1,
                 'name' => 'Razoana',
                 'email' => 'razoana@gmail.com',
                 'email_verified_at' => Carbon::now(),
-                'password' => '$2a$05$Lj3IDMyKsiuDVW203M8.i.9HOBrI9CvJAP4cJrI5QwB42Pr4pg79y',
+                'password' => Hash::make('12345'),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
+                'id' => 2,
                 'name' => 'Ayshee',
                 'email' => 'ayshee@gmail.com',
                 'email_verified_at' => Carbon::now(),
-                'password' => '$2a$05$Lj3IDMyKsiuDVW203M8.i.9HOBrI9CvJAP4cJrI5QwB42Pr4pg79y',
+                'password' => Hash::make('12345'),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],

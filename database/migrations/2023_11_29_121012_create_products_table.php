@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('quantity');
             $table->integer('price');
+            $table->integer('user_id')->index('user_products_fk');
             $table->timestamps();
         });
     }
