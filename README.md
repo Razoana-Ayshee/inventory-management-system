@@ -34,11 +34,8 @@ Access a comprehensive list of all products in your inventory. This includes imp
 
 Keep your product information up-to-date by editing existing product details. This includes modifying product names, descriptions, prices, and quantities.
 
-### 6. Search and Filter
 
-Efficiently search for specific products using keywords or filter products based on criteria such as price range or quantity available.
-
-### 7. Delete Product
+### 6. Delete Product
 
 Remove products from your inventory when they are no longer available or relevant.
 

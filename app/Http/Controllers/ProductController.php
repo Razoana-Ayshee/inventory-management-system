@@ -44,12 +44,12 @@ class ProductController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+       // dd($request->all());
         /** @var User $authUser */
         $authUser = auth()->user();
-
         try {
             $rules = [
-                'name' => ['required', 'string', 'max:10'],
+                'name' => ['required', 'string'],
                 'quantity' => ['required', 'integer'],
                 'price' => ['required', 'integer'],
             ];
@@ -105,7 +105,7 @@ class ProductController extends Controller
         try {
             $product = Product::find($id);
             $rules = [
-                'name' => ['required', 'string', 'max:10'],
+                'name' => ['required', 'string'],
                 'quantity' => ['required', 'integer'],
                 'price' => ['required', 'integer'],
             ];
