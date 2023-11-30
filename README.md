@@ -88,8 +88,9 @@ Remove products from your inventory when they are no longer available or relevan
 ## Usage
 
 1. Open the application in your web browser.
-2. Navigate to the "Product Management" section.
-3. Use the provided forms and buttons to add, view, update, or delete products.
+2. sign up and login .
+3. Navigate to the "Product Management" section.
+4. Use the provided forms and buttons to add, view, update, or delete products.
 
 
 
